@@ -1,0 +1,4 @@
+id,status,created_by,created_on,modified_by,modified_on,order_num,departname,description,parentdepartid
+4028d881436d514601436d5214d70015,0,arrym,2016-04-02,arrym,2016-04-02,1,信息部,信息部什么的最叼了,
+4028d881436d514601436d5214ef0016,0,arrym,2016-04-03,arrym,2016-04-03,2,设计部,,
+4028d881436d514601436d5214f30017,0,arrym,2016-04-04,arrym,2016-04-04,3,研发室,研发技术难题,4028d881436d514601436d5214ef0016

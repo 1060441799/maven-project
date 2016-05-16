@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+         http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
+	default-lazy-init="true">
+	<mvc:annotation-driven />
+
+	<!-- 加载controller的时候,不加载service,因为此时事物并未生效,若此时加载了service,那么事物无法对service进行拦截 -->
+	<context:component-scan base-package="com.newframe.web.controller">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+
+	<!-- 使用默认servlet处理静态文件 -->
+	<mvc:default-servlet-handler />
+
+	<!-- ApplicationContext -->
+	<bean class="com.newframe.core.util.ApplicationContextUtil" />
+	<bean id="springContext" class="com.newframe.core.spring.context.SpringContext" />
+
+	<bean id="hibernateAwareObjectMapper" class="com.newframe.core.hibernate.HibernateAwareObjectMapper"></bean>
+
+	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+	<bean id="mappingJacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="objectMapper" ref="hibernateAwareObjectMapper" />
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="cacheSeconds" value="0" />
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJacksonHttpMessageConverter" /><!-- json转换器 -->
+			</list>
+		</property>
+		<property name="webBindingInitializer">
+			<bean class="com.newframe.core.interceptors.MyWebBinding" />
+		</property>
+	</bean>
+
+	<!-- Freemarker配置 -->
+	<bean
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/pages/html/" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">0</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="number_format">0.##########</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="classic_compatible">true</prop>
+				<prop key="template_exception_handler">ignore</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 设置freeMarker的配置文件路径 -->
+	<bean class="org.springframework.beans.factory.config.PropertiesFactoryBean" />
+
+	<bean
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="cache" value="true" />
+		<property name="suffix" value=".html" />
+		<property name="contentType" value="text/html; charset=UTF-8" />
+		<property name="order" value="1" />
+	</bean>
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="contentType" value="text/html" />
+		<property name="prefix" value="/pages/newframework/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="2" />
+	</bean>
+
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:defaultEncoding="UTF-8">
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+	</bean>
+
+	<!-- Bean解析器,级别高于默认解析器,寻找bean对象进行二次处理 -->
+	<bean id="beanNameViewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver"
+		p:order="0">
+	</bean>
+
+	<!-- 方言 -->
+	<bean id="dialect" class="com.newframe.core.hibernate.dialect.DialectFactoryBean">
+		<property name="dbType" value="${jdbc.dbType}" />
+	</bean>
+
+	<!-- 异常处理类 -->
+	<bean id="exceptionHandler" class="com.newframe.core.exception.MyExceptionHandler" />
+	<!-- <bean id="handlerExceptionResolver" class="com.newframe.core.exception.GlobalExceptionHandler">
+		<property name="defaultErrorView" value="common/error" /> 错误页面
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+				<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+			</list>
+		</property>
+	</bean> -->
+
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<prop key="kaptcha.border">yes</prop>
+						<prop key="kaptcha.border.color">98,84,178</prop>
+						<prop key="kaptcha.textproducer.font.color">98,84,178</prop>
+						<prop key="kaptcha.image.width">105</prop>
+						<prop key="kaptcha.image.height">41</prop>
+						<prop key="kaptcha.textproducer.font.size">36</prop>
+						<prop key="kaptcha.session.key">code</prop>
+						<prop key="kaptcha.textproducer.char.length">4</prop>
+						<prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>
+					</props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.newframe.core.interceptors.EncodingInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.newframe.core.interceptors.AuthInterceptor">
+				<property name="excludeUrls">
+					<list>
+						<value>loginController/login</value>
+						<value>loginController/signup</value>
+						<value>loginController?goPwdInit</value>
+						<value>loginController?pwdInit</value>
+						<value>loginController?saveUser</value>
+						<value>loginController?checkuser</value>
+						<value>cmsMenuController?index</value>
+						<value>cmsArticleController?cmsArticleListShow</value>
+						<value>cmsArticleController?datagridwx</value>
+						<value>cmsArticleController?cmsArticleShow</value>
+						<value>cmsController?goPage</value>
+						<value>cmsController?getMenuList</value>
+						<value>wechatController?wechat</value>
+						<value>zpController?iscontinue</value>
+						<value>zpController?saveZpPrize</value>
+						<value>zpController?getZpPize</value>
+						<value>zpController?saverecord</value>
+						<value>zpController?ggl_new</value>
+						<value>zpController?ggl</value>
+						<value>zpController?zp</value>
+						<value>zpController?goZhuanpan</value>
+						<value>weixinCmsStyleController?upload</value>
+						<value>newsItemController?newscontent</value>
+						<!-- 保存用户 -->
+						<value>userController?saveUser</value>
+						<value>weixinLinksucaiController?link</value>
+						<value>zpController?goGglNew</value>
+						<value>zpController?doGgl</value>
+						<value>zpController?saveRecord</value>
+					</list>
+				</property>
+				<!-- 模糊匹配 -->
+				<property name="excludeContainUrls">
+					<list>
+						<value>rest/openwx</value>
+						<value>openDataController</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+</beans>

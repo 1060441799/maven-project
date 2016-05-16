@@ -1,0 +1,2 @@
+id,status,created_by,created_on,modified_by,modified_on,order_num,CRON_EXPRESSION,IS_EFFECT,IS_START,TASK_DESCRIBE,TASK_ID
+4028d881436d514601436d5219ab0159,0,arrym,2016-04-03 0:00,arrym,2016-04-03 0:00,1,0 0/1 * * * ?,0,0,≤‚ ‘Demo,taskDemoServiceTaskCronTrigger

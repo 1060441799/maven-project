@@ -1,0 +1,139 @@
+<!-- navbar -->
+<div data-ng-include=" 'pages/html/tpl/blocks/header.html' "
+     class="app-header navbar"></div>
+<!-- / navbar -->
+
+<!-- menu -->
+<!--<div data-ng-include=" 'pages/html/tpl/blocks/aside.html' "-->
+     <!--class="app-aside hidden-xs {{app.settings.asideColor}}"></div>-->
+<!-- / menu -->
+
+<!-- content -->
+<div class="app-content" style="
+    margin-left: 0;
+">
+    <div ui-butterbar></div>
+    <a href class="off-screen-toggle hide" ui-toggle-class="off-screen"
+       data-target=".app-aside"></a>
+    <div style="position: fixed;z-index: 999998;width: 100%;height: 20px;opacity: 0.1;background: #000;"></div>
+    <div style="position: fixed;z-index: 999999;width: 100%;height: 20px;color: #fff;">
+        <span style="float: left;color: #fff">系统提示：</span><marquee style="width: 90%;" scrollamount="10" direction=left ng-bind="server.message"></marquee>
+    </div>
+    <!--<div style="background: #060e1b;overflow: hidden;height: 100px;position: relative;">-->
+        <!--<canvas id="canvas" style="height: 100%;width:100%;position: absolute;"></canvas>-->
+        <!--<form style="opacity: 0.5;position: absolute;top: 25px;left: 50%;" class="navbar-form navbar-form-sm navbar-right shift" ui-shift="prependTo" target=".navbar-collapse"-->
+              <!--role="search" ng-controller="TypeaheadDemoCtrl">-->
+            <!--<div class="form-group">-->
+                <!--<div class="input-group">-->
+                    <!--<input type="text" ng-model="selected"-->
+                           <!--typeahead="state for state in states | filter:$viewValue | limitTo:8"-->
+                           <!--class="form-control input-sm bg-light no-border rounded padder" placeholder="Search projects...">-->
+             <!--<span class="input-group-btn">-->
+               <!--<button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>-->
+             <!--</span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</form>-->
+    <!--</div>-->
+    <!--<script>-->
+        <!--"use strict";-->
+        <!--var canvas = document.getElementById('canvas'),-->
+                <!--ctx = canvas.getContext('2d'),-->
+                <!--w = canvas.width = window.innerWidth,-->
+                <!--h = canvas.height = window.innerHeight,-->
+                <!--hue = 217,-->
+                <!--stars = [],-->
+                <!--count = 0,-->
+                <!--maxStars = 1400;-->
+        <!--// Thanks @jackrugile for the performance tip! http://codepen.io/jackrugile/pen/BjBGoM-->
+        <!--// Cache gradient-->
+        <!--var canvas2 = document.createElement('canvas'),-->
+                <!--ctx2 = canvas2.getContext('2d');-->
+        <!--canvas2.width = 100;-->
+        <!--canvas2.height = 100;-->
+        <!--var half = canvas2.width/2,-->
+                <!--gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);-->
+        <!--gradient2.addColorStop(0.025, '#fff');-->
+        <!--gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)');-->
+        <!--gradient2.addColorStop(0.25, 'hsl(' + hue + ', 64%, 6%)');-->
+        <!--gradient2.addColorStop(1, 'transparent');-->
+        <!--ctx2.fillStyle = gradient2;-->
+        <!--ctx2.beginPath();-->
+        <!--ctx2.arc(half, half, half, 0, Math.PI * 2);-->
+        <!--ctx2.fill();-->
+        <!--// End cache-->
+        <!--function random(min, max) {-->
+            <!--if (arguments.length < 2) {-->
+                <!--max = min;-->
+                <!--min = 0;-->
+            <!--}-->
+            <!--if (min > max) {-->
+                <!--var hold = max;-->
+                <!--max = min;-->
+                <!--min = hold;-->
+            <!--}-->
+            <!--return Math.floor(Math.random() * (max - min + 1)) + min;-->
+        <!--}-->
+        <!--var Star = function() {-->
+            <!--this.orbitRadius = random(w / 2 - 50);-->
+            <!--this.radius = random(100, this.orbitRadius) / 10;-->
+            <!--this.orbitX = w / 2;-->
+            <!--this.orbitY = h / 2;-->
+            <!--this.timePassed = random(0, maxStars);-->
+            <!--this.speed = random(this.orbitRadius) / 900000;-->
+            <!--this.alpha = random(2, 10) / 10;-->
+            <!--count++;-->
+            <!--stars[count] = this;-->
+        <!--}-->
+        <!--Star.prototype.draw = function() {-->
+            <!--var x = Math.sin(this.timePassed + 1) * this.orbitRadius + this.orbitX,-->
+                    <!--y = Math.cos(this.timePassed) * this.orbitRadius/2 + this.orbitY,-->
+                    <!--twinkle = random(10);-->
+            <!--if (twinkle === 1 && this.alpha > 0) {-->
+                <!--this.alpha -= 0.05;-->
+            <!--} else if (twinkle === 2 && this.alpha < 1) {-->
+                <!--this.alpha += 0.05;-->
+            <!--}-->
+            <!--ctx.globalAlpha = this.alpha;-->
+            <!--ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);-->
+            <!--this.timePassed += this.speed;-->
+        <!--}-->
+        <!--for (var i = 0; i < maxStars; i++) {-->
+            <!--new Star();-->
+        <!--}-->
+        <!--function animation() {-->
+            <!--ctx.globalCompositeOperation = 'source-over';-->
+            <!--ctx.globalAlpha = 0.8;-->
+            <!--ctx.fillStyle = 'hsla(' + hue + ', 64%, 6%, 1)';-->
+            <!--ctx.fillRect(0, 0, w, h)-->
+            <!--ctx.globalCompositeOperation = 'lighter';-->
+            <!--for (var i = 1, l = stars.length; i < l; i++) {-->
+                <!--stars[i].draw();-->
+            <!--};-->
+            <!--window.requestAnimationFrame(animation);-->
+        <!--}-->
+        <!--animation();-->
+    <!--</script>-->
+    <div class="app-content-body fade-in" ui-view></div>
+</div>
+<!-- /content -->
+
+<!-- footer -->
+<div class="app-footer wrapper b-t bg-white" style="
+    margin-left: 0;
+">
+	<span class="pull-right">{{app.version}} <a href
+                                                ui-scroll-to="app" class="m-l-sm text-muted"><i
+            class="fa fa-long-arrow-up"></i></a></span> &copy; 2015 Copyright.
+</div>
+<!-- / footer -->
+
+<div data-ng-include=" 'pages/html/tpl/blocks/settings.html' "class="" style="position: fixed;
+    top: 120px;
+    right: -1px;
+    z-index: 1050;
+    background: #09c;
+    color: #fff;
+    width: 25px;"></div>
+
+<!-- <div id="chat" data-ng-include=" 'pages/html/tpl/blocks/chat.list.html' " style="display:none"></div> -->

@@ -1,0 +1,9 @@
+id,status,created_by,created_on,modified_by,modified_on,order_num,extend,iconclas,content,name,path,type
+4028d881436d514601436d5214650000,0,arrym,2016-04-03,arrym,2016-04-03,1,png,back,,返回,plug-in/accordion/images/back.png,1
+4028d881436d514601436d5214b10001,0,arrym,2016-04-04,arrym,2016-04-04,2,png,pie,,饼图,plug-in/accordion/images/pie.png,1
+4028d881436d514601436d5214b30002,0,arrym,2016-04-05,arrym,2016-04-05,3,png,pictures,,图片,plug-in/accordion/images/pictures.png,1
+4028d881436d514601436d5214b40003,0,arrym,2016-04-06,arrym,2016-04-06,4,png,pencil,,笔,plug-in/accordion/images/pencil.png,1
+4028d881436d514601436d5214b50004,0,arrym,2016-04-07,arrym,2016-04-07,5,png,map,,地图,plug-in/accordion/images/map.png,1
+4028d881436d514601436d5214b80005,0,arrym,2016-04-08,arrym,2016-04-08,6,png,groud_add,,组,plug-in/accordion/images/group_add.png,1
+4028d881436d514601436d5214b90006,0,arrym,2016-04-09,arrym,2016-04-09,7,png,calculator,,计算器,plug-in/accordion/images/calculator.png,1
+4028d881436d514601436d5214ba0007,0,arrym,2016-04-10,arrym,2016-04-10,8,png,folder,,文件夹,plug-in/accordion/images/folder.png,1

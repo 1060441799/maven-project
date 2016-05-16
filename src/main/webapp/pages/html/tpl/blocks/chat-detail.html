@@ -1,0 +1,47 @@
+<div class="row" style="
+    margin: 0;
+">
+    <div id="chat-window-history" class="row" style="
+    /* border: 1px solid red; */
+    height: 350px;
+    margin: 10px;
+    background: rgba(238, 238, 238, 0.39);
+        overflow-y: auto;
+            padding: 5px;
+">
+        <chatmessage message-repeat-done time="{{message.time}}" name="{{message.name}}" signture="{{message.signture}}" ng-repeat="message in messages" type="{{message.type}}" close="closeMessage($index)" who="{{message.who}}">{{message.msg}}</chatmessage>
+    </div>
+    <div class="row" style="
+    /* border: 1px solid red; */
+    /*background: rgba(238, 238, 238, 0.48);*/
+    margin: 10px;
+    position: relative;
+">
+        <ul class="chat-window-ul">
+            <li class="chat-window-li">
+                <i class="icon-emoticon-smile"></i>
+            </li>
+            <li class="chat-window-li chat-window-li-second">
+                <i class="icon-picture"></i>
+            </li>
+            <li class="chat-window-li chat-window-li-second">
+                <i class="icon-like"></i>
+            </li>
+        </ul>
+        <textarea ng-model="chat.message" class="form-control chat-window-textarea" placeholder="Type your message"></textarea>
+        <div class="chat-window-btn">
+            <button class="btn btn-danger btn-xs" ui-toggle-class="btn-success" ng-click="close()">
+                <i class="icon-close"></i>
+                <span class="text">关闭</span>
+                <i class="fa fa-check text-active"></i>
+                <span class="text-active">Success</span>
+            </button>
+            <button class="btn btn-info btn-xs" ui-toggle-class="btn-success" ng-click="sendMessage()">
+                <i class="icon-cursor"></i>
+                <span class="text">发送</span>
+                <i class="fa fa-check text-active"></i>
+                <span class="text-active">Success</span>
+            </button>
+        </div>
+    </div>
+</div>

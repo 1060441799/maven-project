@@ -1,0 +1,5 @@
+
+1.将ng-model的值传给directive
+2.将验证错误属性对象传给directive
+3.directive将验证结果返回给controller
+4.将验证配置项告诉directive

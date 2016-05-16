@@ -1,0 +1,89 @@
+<div class="wrapper-md" ng-controller="TableCtrl">
+	<div class="panel panel-default">
+		<div class="panel-heading">User List</div>
+		<div class="panel-body">
+			<button type="button" ng-click="addRandomItem(row)"
+				class="btn btn-sm btn-success">
+				<i class="glyphicon glyphicon-plus"> </i> Add random item
+			</button>
+		</div>
+		<table st-table="displayedCollection" st-safe-src="rowCollection"
+			class="table table-bordered table-hover table-condensed bg-white-only">
+			<thead>
+				<tr>
+					<th st-sort="firstName">first name</th>
+					<th st-sort="lastName">last name</th>
+					<th st-sort="birthDate">birth date</th>
+					<th st-sort="balance">balance</th>
+					<th st-sort="lastName">last name</th>
+					<th st-sort="birthDate">birth date</th>
+					<th st-sort="balance">balance</th>
+					<th st-sort="birthDate">birth date</th>
+					<th st-sort="balance">balance</th>
+					<th width="100"></th>
+				</tr>
+				<tr>
+					<th colspan="10"><input st-search="" class="form-control"
+						placeholder="global search ..." type="text" /></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in displayedCollection">
+					 <td class="v-middle">
+				        <!-- editable username (text with validation) -->
+				        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data, user.id)" e-required>
+				          {{ user.name || 'empty' }}
+				        </span>
+				      </td>
+				      <td class="v-middle">
+				        <!-- editable status (select-local) -->
+				        <span editable-select="user.status" e-name="status" e-form="rowform" e-ng-options="s.value as s.text for s in statuses">
+				          {{ showStatus(user) }}
+				        </span>
+				      </td>
+				      <td class="v-middle">
+				        <!-- editable username (text with validation) -->
+				        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data, user.id)" e-required>
+				          {{ user.name || 'empty' }}
+				        </span>
+				      </td>
+				      <td class="v-middle">
+				        <!-- editable status (select-local) -->
+				        <span editable-select="user.status" e-name="status" e-form="rowform" e-ng-options="s.value as s.text for s in statuses">
+				          {{ showStatus(user) }}
+				        </span>
+				      </td>
+				      <td class="v-middle">
+				        <!-- editable status (select-local) -->
+				        <span editable-select="user.status" e-name="status" e-form="rowform" e-ng-options="s.value as s.text for s in statuses">
+				          {{ showStatus(user) }}
+				        </span>
+				      </td>
+	              	<td>{{row.firstName}}</td>
+			        <td>{{row.lastName}}</td>
+			        <td>{{row.birthDate}}</td>
+			        <td>{{row.balance}}</td>
+					
+					<td>
+				        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == user">
+				          <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm btn-info">
+				            save
+				          </button>
+				          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-sm btn-default">
+				            cancel
+				          </button>
+				        </form>
+		                <div class="buttons" ng-show="!rowform.$visible">
+				          	<button type="button" ng-click="removeItem(row)" class="btn btn-xs btn-default">
+								<i class="fa fa-times"></i>
+							</button>
+							<button type="button" ng-click="tableform.$show()" class="btn btn-xs btn-default">
+								<i class="fa fa-times"></i>
+							</button>
+				        </div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

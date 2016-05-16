@@ -1,0 +1,4 @@
+id,status,created_by,created_on,modified_by,modified_on,order_num,rolecode,rolename
+402881e44648134a014648163a6d0001,0,arrym,2016-04-03,arrym,2016-04-03,1,ceshi,测试角色
+4028d881436d514601436d52159c0041,0,arrym,2016-04-04,arrym,2016-04-04,2,admin,管理员
+4028d881436d514601436d5215a00042,0,arrym,2016-04-05,arrym,2016-04-05,3,manager,普通用户
